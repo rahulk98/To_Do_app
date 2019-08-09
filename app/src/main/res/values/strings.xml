@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">Rahul Krishnan</string>
+    <string name="name_label">Rahul Krishnan</string>
+    <string name="degree_label">Pursuing B.Tech in CSE</string>
+    <string name="location_label">Amritapuri, Kollam</string>
+    <string name="profile_image">Profile Image</string>
+    <string name="technical_skills_label">Technical Skills</string>
+    <string name="java_label">Java</string>
+    <string name="python_label">Python</string>
+    <string name="web_dev_label">Web development</string>
+    <string name="c_label">C</string>
+    <string name="cpp_label">C++</string>
+    <string name="algorithms_label">Algorithms and Data Structures</string>
+    <string name="machine_learning_label">Machine learning</string>
+    <string name="pattern_recognition_label">Pattern recognition</string>
+    <string name="android_label">Android app development</string>
+    <string name="personal_details_label">Personal Details</string>
+    <string name="email_label">Email id: rahul.krishnan27@gmail.com</string>
+    <string name="phone_label">Phone no: +91- 9400538200</string>
+    <string name="areas_of_interest_label">Areas of Interest</string>
+    <string name="deep_learning_label">Deep learning</string>
+</resources>
