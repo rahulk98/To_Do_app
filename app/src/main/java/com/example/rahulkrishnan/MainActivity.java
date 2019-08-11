@@ -2,8 +2,8 @@ package com.example.rahulkrishnan;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -42,5 +42,18 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(this, ResumeActivity.class);
             startActivity(intent);
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                populateDB();
+            }
+        }
+    }
+
+    private void populateDB() {
     }
 }

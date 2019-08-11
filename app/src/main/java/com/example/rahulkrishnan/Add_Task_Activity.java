@@ -4,8 +4,8 @@ import android.app.DatePickerDialog;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -19,17 +19,18 @@ import java.util.Calendar;
 import java.util.Locale;
 
 public class Add_Task_Activity extends AppCompatActivity {
-    public static final String LOG_TAGE = Add_Task_Activity.class.getSimpleName();
+    public static final String LOG_TAG = Add_Task_Activity.class.getSimpleName();
     final Calendar myCalendar = Calendar.getInstance();
     EditText taskName;
     EditText taskDate;
     public Boolean isUpdate = Boolean.FALSE;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add__task_);
-        taskName = (EditText) findViewById(R.id.task_name);
-        taskDate = (EditText) findViewById(R.id.task_date);
+        taskName = findViewById(R.id.task_name);
+        taskDate = findViewById(R.id.task_date);
         Intent intent = getIntent();
         final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
             @Override
@@ -67,24 +68,25 @@ public class Add_Task_Activity extends AppCompatActivity {
     public void addTask(MenuItem item) {
         String nameTask = taskName.getText().toString();
         String dateTask = taskDate.getText().toString();
-        if(nameTask.trim().length() < 2){
+        if (nameTask.trim().length() < 2) {
             Toast.makeText(this, "Please enter task name", Toast.LENGTH_SHORT).show();
             return;
         }
-        if(dateTask.trim().length()<2){
+        if (dateTask.trim().length() < 2) {
             Toast.makeText(this, "Please enter task date", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        if(isUpdate){
+        if (isUpdate) {
 
-        }
-        else{
+        } else {
             SQLiteDatabase db = new TaskDBSQLiteHelper(this).getWritableDatabase();
             ContentValues contentValues = new ContentValues();
             contentValues.put(DBTask.Tasks.COLUMN_TASK_NAME, nameTask);
             contentValues.put(DBTask.Tasks.COLUMN_TASK_DATE, dateTask);
-            long newrowid = new 
+            db.insert(DBTask.Tasks.TABLE_NAME, null, contentValues);
+            setResult(RESULT_OK);
+            finish();
         }
 
     }

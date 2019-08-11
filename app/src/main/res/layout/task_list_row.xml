@@ -1,6 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/centerContent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="10dp"
+    android:layout_weight="4"
+    android:orientation="vertical"
+    android:visibility="visible">
 
-</android.support.constraint.ConstraintLayout>
+    <TextView
+        android:id="@+id/task_name_row"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawablePadding="10dp"
+        android:textColor="#8D8D8D"
+        android:textSize="16sp"
+        android:visibility="visible" />
+
+    <TextView
+        android:id="@+id/task_date_row"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#676464"
+        android:textSize="14sp"
+        android:typeface="sans" />
+</LinearLayout>
