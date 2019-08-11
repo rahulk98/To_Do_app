@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_image"
+    tools:context=".ResumeActivity">
+
+    <ImageView
+        android:id="@+id/profile_picture_id"
+        android:layout_width="157dp"
+        android:layout_height="152dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/profile_image"
+        android:src="@drawable/profile_image"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.014"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/name_text_id"
+        style="@style/text_style"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="@string/name_label"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/degree_text_id"
+        app:layout_constraintEnd_toStartOf="@+id/skills_text_id"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profile_picture_id"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <TextView
+        android:id="@+id/degree_text_id"
+        style="@style/text_style"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="@string/degree_label"
+        app:layout_constraintBottom_toTopOf="@+id/location_text_id"
+        app:layout_constraintEnd_toStartOf="@+id/skills_text_id"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/name_text_id" />
+
+    <TextView
+        android:id="@+id/location_text_id"
+        style="@style/text_style"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:text="@string/location_label"
+        app:layout_constraintBottom_toBottomOf="@+id/skills_text_id"
+        app:layout_constraintEnd_toStartOf="@+id/skills_text_id"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/degree_text_id" />
+
+    <ScrollView
+        android:id="@+id/skills_text_id"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/profile_picture_id"
+        app:layout_constraintTop_toTopOf="@+id/profile_picture_id"
+        app:layout_constraintVertical_bias="0.0">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/header_style"
+                android:text="@string/technical_skills_label" />
+
+            <TextView
+                style="@style/content_style"
+                android:text="@string/c_label" />
+
+            <TextView
+                style="@style/content_style"
+                android:text="@string/cpp_label" />
+
+            <TextView
+                style="@style/content_style"
+                android:text="@string/java_label" />
+
+            <TextView
+                style="@style/content_style"
+                android:text="@string/python_label" />
+
+            <TextView
+                style="@style/content_style"
+                android:text="@string/algorithms_label" />
+
+            <TextView
+                style="@style/content_style"
+                android:text="@string/web_dev_label" />
+
+            <TextView
+                style="@style/content_style"
+                android:text="@string/machine_learning_label" />
+
+            <TextView
+                style="@style/content_style"
+                android:text="@string/pattern_recognition_label" />
+
+            <TextView
+                style="@style/content_style"
+                android:text="@string/android_label" />
+
+            <TextView
+                style="@style/header_style"
+                android:text="@string/areas_of_interest_label" />
+
+            <TextView
+                style="@style/content_style"
+                android:text="@string/machine_learning_label" />
+
+            <TextView
+                style="@style/content_style"
+                android:text="@string/deep_learning_label" />
+
+            <TextView
+                style="@style/content_style"
+                android:text="@string/algorithms_label" />
+
+            <TextView
+                style="@style/header_style"
+                android:text="@string/personal_details_label" />
+
+            <TextView
+                style="@style/content_style"
+                android:text="@string/email_label" />
+
+            <TextView
+                style="@style/content_style"
+                android:text="@string/phone_label" />
+        </LinearLayout>
+    </ScrollView>
+
+</android.support.constraint.ConstraintLayout>

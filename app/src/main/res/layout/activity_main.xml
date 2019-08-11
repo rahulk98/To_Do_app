@@ -1,146 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_image"
     tools:context=".MainActivity">
 
-    <ImageView
-        android:id="@+id/profile_picture_id"
-        android:layout_width="162dp"
-        android:layout_height="181dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:adjustViewBounds="true"
-        android:contentDescription="@string/profile_image"
-        android:src="@drawable/profile_image"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.034"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
 
-    <TextView
-        android:id="@+id/name_text_id"
-        style="@style/text_style"
-        android:text="@string/name_label"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/degree_text_id"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/profile_picture_id"
-        app:layout_constraintTop_toTopOf="@+id/profile_picture_id"
-        app:layout_constraintVertical_chainStyle="spread_inside" />
-
-    <TextView
-        android:id="@+id/degree_text_id"
-        style="@style/text_style"
-        android:text="@string/degree_label"
-        app:layout_constraintBottom_toTopOf="@+id/location_text_id"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/profile_picture_id"
-        app:layout_constraintTop_toBottomOf="@+id/name_text_id" />
-
-    <TextView
-        android:id="@+id/location_text_id"
-        style="@style/text_style"
-        android:text="@string/location_label"
-        app:layout_constraintBottom_toBottomOf="@+id/profile_picture_id"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/profile_picture_id"
-        app:layout_constraintTop_toBottomOf="@+id/degree_text_id" />
-
-    <ScrollView
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profile_picture_id">
-
-        <LinearLayout
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
 
-            <TextView
-                android:text="@string/technical_skills_label"
-                style="@style/header_style" />
+    </android.support.design.widget.AppBarLayout>
 
-            <TextView
-                style="@style/content_style"
-                android:text="@string/c_label" />
+    <include
+        layout="@layout/content_main"
+        android:layout_width="match_parent"
+        android:layout_below="@id/appbar"
+        android:layout_height="match_parent" />
 
-            <TextView
-                style="@style/content_style"
-                android:text="@string/cpp_label" />
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="17dp"
+        android:layout_marginBottom="14dp"
+        app:srcCompat="@drawable/ic_action_add" />
 
-            <TextView
-                style="@style/content_style"
-                android:text="@string/java_label" />
-
-            <TextView
-                style="@style/content_style"
-                android:text="@string/python_label" />
-
-            <TextView
-                style="@style/content_style"
-                android:text="@string/algorithms_label" />
-
-            <TextView
-                style="@style/content_style"
-                android:text="@string/web_dev_label" />
-
-            <TextView
-                style="@style/content_style"
-                android:text="@string/machine_learning_label" />
-
-            <TextView
-                style="@style/content_style"
-                android:text="@string/pattern_recognition_label" />
-
-            <TextView
-                style="@style/content_style"
-                android:text="@string/android_label" />
-
-            <TextView
-                style="@style/header_style"
-                android:text="@string/areas_of_interest_label"
-                />
-
-            <TextView
-                style="@style/content_style"
-                android:text="@string/machine_learning_label" />
-
-            <TextView
-                style="@style/content_style"
-                android:text="@string/deep_learning_label" />
-
-            <TextView
-                style="@style/content_style"
-                android:text="@string/algorithms_label" />
-
-            <TextView
-                style="@style/header_style"
-                android:text="@string/personal_details_label" />
-
-            <TextView
-                style="@style/content_style"
-                android:text="@string/email_label" />
-
-            <TextView
-                style="@style/content_style"
-                android:text="@string/phone_label" />
-
-
-        </LinearLayout>
-    </ScrollView>
-
-</android.support.constraint.ConstraintLayout>
+</RelativeLayout>

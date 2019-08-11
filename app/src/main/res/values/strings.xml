@@ -19,4 +19,11 @@
     <string name="phone_label">Phone no: +91- 9400538200</string>
     <string name="areas_of_interest_label">Areas of Interest</string>
     <string name="deep_learning_label">Deep learning</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="toolbar_title">Tasks</string>
+    <string name="about_me">About Developer</string>
+    <string name="task_name_hint">Enter task</string>
+    <string name="today_text">Today</string>
+    <string name="tomorrow_text">Tomorrow</string>
+    <string name="upcoming_text">Upcoming</string>
 </resources>
