@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Add_Task_Activity">
-
+    <!--TODO Add textviews-->
     <EditText
         android:id="@+id/task_name"
         android:layout_width="wrap_content"

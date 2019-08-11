@@ -4,7 +4,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 public class TaskDBSQLiteHelper extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
@@ -26,11 +25,14 @@ public class TaskDBSQLiteHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    public void markAsDone(String id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.rawQuery("delete from " + DBTask.Tasks.TABLE_NAME + " WHERE _ID = " + id, null);
+    }
+
     public Cursor getTodayTasks(String date) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor res = db.rawQuery("select * from " + DBTask.Tasks.TABLE_NAME + " WHERE " + DBTask.Tasks.COLUMN_TASK_DATE + " = '" + date + "' order by _ID desc", null);
-        Log.d("query", res.getCount() + "");
-        Log.d("query", "select * from " + DBTask.Tasks.TABLE_NAME + " WHERE date(strftime('%m/%Y/%d', " + DBTask.Tasks.COLUMN_TASK_DATE + ", 'localtime')) = date('now', 'localtime') order by _ID desc");
         return res;
     }
 
