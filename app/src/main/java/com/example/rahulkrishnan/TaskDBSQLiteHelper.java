@@ -25,9 +25,10 @@ public class TaskDBSQLiteHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void markAsDone(String id) {
+    //TODO fix delete from db
+    public void deleteTask(String taskName, String taskDate) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.rawQuery("delete from " + DBTask.Tasks.TABLE_NAME + " WHERE _ID = " + id, null);
+        Cursor cursor = db.rawQuery("delete from " + DBTask.Tasks.TABLE_NAME + " WHERE " + DBTask.Tasks.COLUMN_TASK_NAME + " = '" + taskName + "' AND " + DBTask.Tasks.COLUMN_TASK_DATE + " = '" + taskDate + "'", null);
     }
 
     public Cursor getTodayTasks(String date) {
@@ -46,5 +47,12 @@ public class TaskDBSQLiteHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor res = db.rawQuery("select * from " + DBTask.Tasks.TABLE_NAME + " WHERE " + DBTask.Tasks.COLUMN_TASK_DATE + " > '" + date + "' order by _ID desc", null);
         return res;
+    }
+
+    public String getID(String taskName, String taskDate) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery("select _ID from " + DBTask.Tasks.TABLE_NAME + " WHERE " + DBTask.Tasks.COLUMN_TASK_NAME + " = '" + taskName + "' AND " + DBTask.Tasks.COLUMN_TASK_DATE + " = '" + taskDate + "'", null);
+        cursor.moveToFirst();
+        return cursor.getString(0);
     }
 }
