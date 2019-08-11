@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 public class TaskDBSQLiteHelper extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
@@ -25,21 +26,23 @@ public class TaskDBSQLiteHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public Cursor getTodayTasks() {
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor res = db.rawQuery("select * from " + DBTask.Tasks.TABLE_NAME + " WHERE date(strftime('%m/%Y/%d', " + DBTask.Tasks.COLUMN_TASK_DATE + ", 'localtime')) = date('now', 'localtime') order by id desc", null);
+    public Cursor getTodayTasks(String date) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res = db.rawQuery("select * from " + DBTask.Tasks.TABLE_NAME + " WHERE " + DBTask.Tasks.COLUMN_TASK_DATE + " = '" + date + "' order by _ID desc", null);
+        Log.d("query", res.getCount() + "");
+        Log.d("query", "select * from " + DBTask.Tasks.TABLE_NAME + " WHERE date(strftime('%m/%Y/%d', " + DBTask.Tasks.COLUMN_TASK_DATE + ", 'localtime')) = date('now', 'localtime') order by _ID desc");
         return res;
     }
 
-    public Cursor getTomorrowTasks() {
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor res = db.rawQuery("select * from " + DBTask.Tasks.TABLE_NAME + " WHERE date(strftime('%m/%Y/%d', " + DBTask.Tasks.COLUMN_TASK_DATE + ", 'localtime')) = date('now', '+1 day','localtime') order by id desc", null);
+    public Cursor getTomorrowTasks(String date) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res = db.rawQuery("select * from " + DBTask.Tasks.TABLE_NAME + " WHERE " + DBTask.Tasks.COLUMN_TASK_DATE + " = '" + date + "' order by _ID desc", null);
         return res;
     }
 
-    public Cursor getUpcomingTasks() {
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor res = db.rawQuery("select * from " + DBTask.Tasks.TABLE_NAME + " WHERE date(strftime('%m/%Y/%d', " + DBTask.Tasks.COLUMN_TASK_DATE + ", 'localtime')) > date('now', '+1 day','localtime') order by id desc", null);
+    public Cursor getUpcomingTasks(String date) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res = db.rawQuery("select * from " + DBTask.Tasks.TABLE_NAME + " WHERE " + DBTask.Tasks.COLUMN_TASK_DATE + " > '" + date + "' order by _ID desc", null);
         return res;
     }
 }

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -84,7 +85,8 @@ public class Add_Task_Activity extends AppCompatActivity {
             ContentValues contentValues = new ContentValues();
             contentValues.put(DBTask.Tasks.COLUMN_TASK_NAME, nameTask);
             contentValues.put(DBTask.Tasks.COLUMN_TASK_DATE, dateTask);
-            db.insert(DBTask.Tasks.TABLE_NAME, null, contentValues);
+            long row = db.insert(DBTask.Tasks.TABLE_NAME, null, contentValues);
+            Log.d(LOG_TAG, nameTask + " " + dateTask + " " + row);
             setResult(RESULT_OK);
             finish();
         }
