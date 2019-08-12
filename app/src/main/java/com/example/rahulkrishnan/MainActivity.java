@@ -102,16 +102,15 @@ public class MainActivity extends AppCompatActivity implements TaskClickListener
             findViewById(R.id.upcoming_tasks_empty_TV).setVisibility(View.VISIBLE);
         }
 
-        todayTaskList.setHasFixedSize(true);
         todayTaskList.setLayoutManager(new LinearLayoutManager(this));
         todayTaskList.setAdapter(todayListAdapter);
-        tomorrowTaskList.setHasFixedSize(true);
+        todayTaskList.setNestedScrollingEnabled(false);
         tomorrowTaskList.setLayoutManager(new LinearLayoutManager(this));
         tomorrowTaskList.setAdapter(tomorrowListAdapter);
-
-        upcomingTaskList.setHasFixedSize(true);
+        tomorrowTaskList.setNestedScrollingEnabled(false);
         upcomingTaskList.setLayoutManager(new LinearLayoutManager(this));
         upcomingTaskList.setAdapter(upcomingListAdapter);
+        upcomingTaskList.setNestedScrollingEnabled(false);
 
     }
 
