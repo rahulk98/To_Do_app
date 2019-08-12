@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Tasks</string>
+    <string name="app_name">Tasks To-Do</string>
     <string name="name_label">Rahul Krishnan</string>
     <string name="degree_label">Pursuing B.Tech in CSE</string>
     <string name="location_label">Amritapuri, Kollam</string>
@@ -20,7 +20,6 @@
     <string name="areas_of_interest_label">Areas of Interest</string>
     <string name="deep_learning_label">Deep learning</string>
     <string name="title_activity_main">MainActivity</string>
-    <string name="toolbar_title">Tasks</string>
     <string name="about_me">About Developer</string>
     <string name="task_name_hint">Enter task</string>
     <string name="today_text">Today</string>
