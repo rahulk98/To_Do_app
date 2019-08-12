@@ -28,7 +28,9 @@ public class TaskDBSQLiteHelper extends SQLiteOpenHelper {
     //TODO fix delete from db
     public void deleteTask(String taskName, String taskDate) {
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery("delete from " + DBTask.Tasks.TABLE_NAME + " WHERE " + DBTask.Tasks.COLUMN_TASK_NAME + " = '" + taskName + "' AND " + DBTask.Tasks.COLUMN_TASK_DATE + " = '" + taskDate + "'", null);
+//        Cursor cursor = db.rawQuery("DELETE from " + DBTask.Tasks.TABLE_NAME + " WHERE " + DBTask.Tasks.COLUMN_TASK_NAME + " = '" + taskName + "' AND " + DBTask.Tasks.COLUMN_TASK_DATE + " = '" + taskDate + "'", null);
+//        Log.d("query", cursor.getCount()+"");
+        db.delete(DBTask.Tasks.TABLE_NAME, DBTask.Tasks.COLUMN_TASK_DATE + " = ? AND " + DBTask.Tasks.COLUMN_TASK_NAME + " = ?", new String[]{taskDate, taskName});
     }
 
     public Cursor getTodayTasks(String date) {

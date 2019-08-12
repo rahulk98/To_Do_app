@@ -71,6 +71,10 @@ public class MainActivity extends AppCompatActivity implements TaskClickListener
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
+                findViewById(R.id.today_tasks_empty_TV).setVisibility(View.GONE);
+                findViewById(R.id.tomorrow_tasks_empty_TV).setVisibility(View.GONE);
+                findViewById(R.id.upcoming_tasks_empty_TV).setVisibility(View.GONE);
+
                 populateDB();
             }
         }
@@ -88,6 +92,15 @@ public class MainActivity extends AppCompatActivity implements TaskClickListener
         TaskListAdapter todayListAdapter = new TaskListAdapter(todayTasks, getApplicationContext(), this, "today");
         TaskListAdapter tomorrowListAdapter = new TaskListAdapter(tomorrowTasks, getApplicationContext(), this, "tomorrow");
         TaskListAdapter upcomingListAdapter = new TaskListAdapter(upcomingTasks, getApplicationContext(), this, "upcoming");
+        if (todayTasks.getCount() == 0) {
+            findViewById(R.id.today_tasks_empty_TV).setVisibility(View.VISIBLE);
+        }
+        if (tomorrowTasks.getCount() == 0) {
+            findViewById(R.id.tomorrow_tasks_empty_TV).setVisibility(View.VISIBLE);
+        }
+        if (upcomingTasks.getCount() == 0) {
+            findViewById(R.id.upcoming_tasks_empty_TV).setVisibility(View.VISIBLE);
+        }
 
         todayTaskList.setHasFixedSize(true);
         todayTaskList.setLayoutManager(new LinearLayoutManager(this));

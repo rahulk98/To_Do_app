@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
@@ -37,6 +38,7 @@ public class Add_Task_Activity extends AppCompatActivity {
         isUpdate = intent.getBooleanExtra(MainActivity.UPDATE_TAG, false);
         taskDBSQLiteHelper = new TaskDBSQLiteHelper(this);
         if (isUpdate) {
+            ((TextView) findViewById(R.id.add_task_header)).setText(this.getString(R.string.edit_task_header));
             invalidateOptionsMenu();
             oldTaskDate = intent.getStringExtra(MainActivity.TASK_DATE_TAG);
             oldTaskName = intent.getStringExtra(MainActivity.TASK_NAME_TAG);
@@ -111,6 +113,8 @@ public class Add_Task_Activity extends AppCompatActivity {
         if (isUpdate) {
             MenuItem deleteBTN = menu.findItem(R.id.delete_task);
             deleteBTN.setVisible(true);
+        } else {
+
         }
         return true;
     }

@@ -48,10 +48,10 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int i) {
-        View view;
         final Pair<String, String> row_item = dataset.get(i);
         viewHolder.taskName.setText(row_item.first);
-        viewHolder.taskDate.setText(row_item.second);
+        String dateTemp = "Due on " + row_item.second;
+        viewHolder.taskDate.setText(dateTemp);
 
     }
 
