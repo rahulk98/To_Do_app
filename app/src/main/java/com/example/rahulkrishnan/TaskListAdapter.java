@@ -1,6 +1,5 @@
 package com.example.rahulkrishnan;
 
-import android.content.Context;
 import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
 import android.util.Pair;
@@ -15,13 +14,11 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
 
 
     private ArrayList<Pair<String, String>> dataset;
-    private Context context;
     private static TaskClickListener taskClickListener;
     String listType;
 
-    public TaskListAdapter(Cursor dataset, Context context, TaskClickListener taskClickListener, String listType) {
+    public TaskListAdapter(Cursor dataset, TaskClickListener taskClickListener, String listType) {
         this.dataset = cursorToList(dataset);
-        this.context = context;
         TaskListAdapter.taskClickListener = taskClickListener;
         this.listType = listType;
     }
@@ -29,7 +26,6 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.task_list_row, viewGroup, false);
-
         return new ViewHolder(v, listType);
     }
 
@@ -76,7 +72,6 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
         @Override
         public void onClick(View v) {
             taskClickListener.onItemClick(itemView, this.getLayoutPosition(), listType);
-
         }
     }
 }

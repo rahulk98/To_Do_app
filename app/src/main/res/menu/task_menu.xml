@@ -2,11 +2,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-        <item
-            android:id="@+id/about_dev"
-            android:title="@string/about_me"
-            android:onClick="openResume"
-            app:showAsAction="never"
-            />
+    <item
+        android:id="@+id/about_dev"
+        android:onClick="openResume"
+        android:title="@string/about_me"
+        app:showAsAction="never" />
 
 </menu>

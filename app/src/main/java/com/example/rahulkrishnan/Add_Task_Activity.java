@@ -20,7 +20,6 @@ import java.util.Calendar;
 import java.util.Locale;
 
 public class Add_Task_Activity extends AppCompatActivity {
-    public static final String LOG_TAG = Add_Task_Activity.class.getSimpleName();
     final Calendar myCalendar = Calendar.getInstance();
     EditText taskName;
     EditText taskDate;
@@ -28,6 +27,7 @@ public class Add_Task_Activity extends AppCompatActivity {
     String oldTaskName;
     String oldTaskDate;
     TaskDBSQLiteHelper taskDBSQLiteHelper;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,14 +37,6 @@ public class Add_Task_Activity extends AppCompatActivity {
         Intent intent = getIntent();
         isUpdate = intent.getBooleanExtra(MainActivity.UPDATE_TAG, false);
         taskDBSQLiteHelper = new TaskDBSQLiteHelper(this);
-        if (isUpdate) {
-            ((TextView) findViewById(R.id.add_task_header)).setText(this.getString(R.string.edit_task_header));
-            invalidateOptionsMenu();
-            oldTaskDate = intent.getStringExtra(MainActivity.TASK_DATE_TAG);
-            oldTaskName = intent.getStringExtra(MainActivity.TASK_NAME_TAG);
-            taskDate.setText(oldTaskDate);
-            taskName.setText(oldTaskName);
-        }
         final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
@@ -54,20 +46,36 @@ public class Add_Task_Activity extends AppCompatActivity {
                 updateLabel();
             }
         };
-        taskDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new DatePickerDialog(Add_Task_Activity.this, date, myCalendar
-                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
-            }
-        });
+        if (isUpdate) {
+            ((TextView) findViewById(R.id.add_task_header)).setText(this.getString(R.string.edit_task_header));
+            invalidateOptionsMenu();
+            oldTaskDate = intent.getStringExtra(MainActivity.TASK_DATE_TAG);
+            oldTaskName = intent.getStringExtra(MainActivity.TASK_NAME_TAG);
+            taskDate.setText(oldTaskDate);
+            taskName.setText(oldTaskName);
+            final String dateValues[] = oldTaskDate.split("/");
+            taskDate.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    new DatePickerDialog(Add_Task_Activity.this, date, Integer.parseInt(dateValues[2]), Integer.parseInt(dateValues[0]) - 1,
+                            Integer.parseInt(dateValues[1])).show();
+                }
+            });
+        } else {
+            taskDate.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    new DatePickerDialog(Add_Task_Activity.this, date, myCalendar
+                            .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                            myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+                }
+            });
+        }
     }
 
     private void updateLabel() {
-        String myFormat = "MM/dd/yy"; //In which you need put here
+        String myFormat = "MM/dd/yyyy";
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-
         taskDate.setText(sdf.format(myCalendar.getTime()));
     }
 
@@ -93,7 +101,6 @@ public class Add_Task_Activity extends AppCompatActivity {
         ContentValues contentValues = new ContentValues();
         contentValues.put(DBTask.Tasks.COLUMN_TASK_NAME, nameTask);
         contentValues.put(DBTask.Tasks.COLUMN_TASK_DATE, dateTask);
-
         if (isUpdate) {
             String id = taskDBSQLiteHelper.getID(oldTaskName, oldTaskDate);
             db.update(DBTask.Tasks.TABLE_NAME, contentValues, "_ID = ? ", new String[]{id});
@@ -104,7 +111,6 @@ public class Add_Task_Activity extends AppCompatActivity {
         }
         setResult(RESULT_OK);
         finish();
-
     }
 
     @Override
@@ -113,8 +119,6 @@ public class Add_Task_Activity extends AppCompatActivity {
         if (isUpdate) {
             MenuItem deleteBTN = menu.findItem(R.id.delete_task);
             deleteBTN.setVisible(true);
-        } else {
-
         }
         return true;
     }

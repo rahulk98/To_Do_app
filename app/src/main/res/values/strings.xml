@@ -30,4 +30,5 @@
     <string name="edit_task_header">Edit task</string>
     <string name="task_date_hint">Enter due date</string>
     <string name="empty_task_label">No tasks due</string>
+    <string name="about_developer_label">About Developer</string>
 </resources>

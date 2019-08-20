@@ -71,8 +71,8 @@
             android:orientation="vertical">
 
             <TextView
-                android:text="@string/technical_skills_label"
-                style="@style/header_style" />
+                style="@style/header_style"
+                android:text="@string/technical_skills_label" />
 
             <TextView
                 style="@style/content_style"
@@ -112,8 +112,7 @@
 
             <TextView
                 style="@style/header_style"
-                android:text="@string/areas_of_interest_label"
-                />
+                android:text="@string/areas_of_interest_label" />
 
             <TextView
                 style="@style/content_style"

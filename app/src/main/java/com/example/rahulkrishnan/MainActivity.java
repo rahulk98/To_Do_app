@@ -9,7 +9,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -22,7 +21,6 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements TaskClickListener {
     public static int REQUEST_CODE = 101;
-    public static String LOG_TAG = MainActivity.class.getSimpleName();
     private TaskDBSQLiteHelper myDb;
     public static String UPDATE_TAG = "isUpdate";
     public static String TASK_NAME_TAG = "taskName";
@@ -74,7 +72,6 @@ public class MainActivity extends AppCompatActivity implements TaskClickListener
                 findViewById(R.id.today_tasks_empty_TV).setVisibility(View.GONE);
                 findViewById(R.id.tomorrow_tasks_empty_TV).setVisibility(View.GONE);
                 findViewById(R.id.upcoming_tasks_empty_TV).setVisibility(View.GONE);
-
                 populateDB();
             }
         }
@@ -82,16 +79,15 @@ public class MainActivity extends AppCompatActivity implements TaskClickListener
 
     public void populateDB() {
         Calendar calendar = Calendar.getInstance();
-        String myFormat = "MM/dd/yy"; //In which you need put here
+        String myFormat = "MM/dd/yyyy"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-
         todayTasks = myDb.getTodayTasks(sdf.format(calendar.getTime()));
         calendar.add(Calendar.DAY_OF_MONTH, 1); //Increment date to get tasks from tomorrow
         tomorrowTasks = myDb.getTomorrowTasks(sdf.format(calendar.getTime()));
         upcomingTasks = myDb.getUpcomingTasks(sdf.format(calendar.getTime()));
-        TaskListAdapter todayListAdapter = new TaskListAdapter(todayTasks, getApplicationContext(), this, "today");
-        TaskListAdapter tomorrowListAdapter = new TaskListAdapter(tomorrowTasks, getApplicationContext(), this, "tomorrow");
-        TaskListAdapter upcomingListAdapter = new TaskListAdapter(upcomingTasks, getApplicationContext(), this, "upcoming");
+        TaskListAdapter todayListAdapter = new TaskListAdapter(todayTasks, this, "today");
+        TaskListAdapter tomorrowListAdapter = new TaskListAdapter(tomorrowTasks, this, "tomorrow");
+        TaskListAdapter upcomingListAdapter = new TaskListAdapter(upcomingTasks, this, "upcoming");
         if (todayTasks.getCount() == 0) {
             findViewById(R.id.today_tasks_empty_TV).setVisibility(View.VISIBLE);
         }
@@ -101,7 +97,6 @@ public class MainActivity extends AppCompatActivity implements TaskClickListener
         if (upcomingTasks.getCount() == 0) {
             findViewById(R.id.upcoming_tasks_empty_TV).setVisibility(View.VISIBLE);
         }
-
         todayTaskList.setLayoutManager(new LinearLayoutManager(this));
         todayTaskList.setAdapter(todayListAdapter);
         todayTaskList.setNestedScrollingEnabled(false);
@@ -111,7 +106,6 @@ public class MainActivity extends AppCompatActivity implements TaskClickListener
         upcomingTaskList.setLayoutManager(new LinearLayoutManager(this));
         upcomingTaskList.setAdapter(upcomingListAdapter);
         upcomingTaskList.setNestedScrollingEnabled(false);
-
     }
 
     @Override
@@ -123,58 +117,31 @@ public class MainActivity extends AppCompatActivity implements TaskClickListener
     @Override
     public void onItemClick(View v, int position, String listType) {
         String taskName = "", taskDate = "";
-        int count = 0;
         if (listType.equals("today")) {
             if (todayTasks != null) {
-                todayTasks.moveToFirst();
-                while (!todayTasks.isAfterLast()) {
-                    if (count == position) {
-                        taskName = todayTasks.getString(1);
-                        taskDate = todayTasks.getString(2);
-                        break;
-                    }
-                    count++;
-                    todayTasks.moveToNext();
-                }
+                todayTasks.moveToPosition(position);
+                taskName = todayTasks.getString(1);
+                taskDate = todayTasks.getString(2);
             }
         }
-        count = 0;
         if (listType.equals("tomorrow")) {
             if (tomorrowTasks != null) {
-                tomorrowTasks.moveToFirst();
-                while (!tomorrowTasks.isAfterLast()) {
-
-                    if (count == position) {
-                        taskName = tomorrowTasks.getString(1);
-                        taskDate = tomorrowTasks.getString(2);
-                        break;
-                    }
-                    count++;
-                    tomorrowTasks.moveToNext();
-                }
+                tomorrowTasks.moveToPosition(position);
+                taskName = tomorrowTasks.getString(1);
+                taskDate = tomorrowTasks.getString(2);
             }
         }
-        count = 0;
         if (listType.equals("upcoming")) {
             if (upcomingTasks != null) {
-                upcomingTasks.moveToFirst();
-                while (!upcomingTasks.isAfterLast()) {
-
-                    if (count == position) {
-                        taskName = upcomingTasks.getString(1);
-                        taskDate = upcomingTasks.getString(2);
-                        break;
-                    }
-                    count++;
-                    upcomingTasks.moveToNext();
-                }
+                upcomingTasks.moveToPosition(position);
+                taskName = upcomingTasks.getString(1);
+                taskDate = upcomingTasks.getString(2);
             }
         }
         Intent intent = new Intent(this, Add_Task_Activity.class);
         intent.putExtra(TASK_NAME_TAG, taskName);
         intent.putExtra(TASK_DATE_TAG, taskDate);
         intent.putExtra(UPDATE_TAG, true);
-        Log.d(LOG_TAG, taskDate);
         startActivityForResult(intent, REQUEST_CODE);
     }
 }

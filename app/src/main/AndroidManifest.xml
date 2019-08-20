@@ -24,7 +24,8 @@
         </activity>
         <activity
             android:name=".ResumeActivity"
-            android:parentActivityName=".MainActivity"></activity>
+            android:parentActivityName=".MainActivity"
+            android:label="@string/about_developer_label"></activity>
     </application>
 
 </manifest>
