@@ -10,9 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".TaskHistory"
+            android:parentActivityName=".MainActivity"></activity>
+        <activity
             android:name=".Add_Task_Activity"
             android:label="@string/app_name"
-            android:parentActivityName=".MainActivity"></activity>
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
@@ -26,7 +29,7 @@
         <activity
             android:name=".ResumeActivity"
             android:label="@string/about_developer_label"
-            android:parentActivityName=".MainActivity"></activity>
+            android:parentActivityName=".MainActivity" />
     </application>
 
 </manifest>

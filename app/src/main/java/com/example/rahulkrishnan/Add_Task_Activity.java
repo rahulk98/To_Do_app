@@ -1,6 +1,7 @@
 package com.example.rahulkrishnan;
 
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
@@ -21,9 +23,10 @@ import java.util.Locale;
 
 public class Add_Task_Activity extends AppCompatActivity {
     final Calendar myCalendar = Calendar.getInstance();
+    public Boolean isUpdate;
     EditText taskName;
     EditText taskDate;
-    public Boolean isUpdate;
+    EditText taskTime;
     String oldTaskName;
     String oldTaskDate;
     TaskDBSQLiteHelper taskDBSQLiteHelper;
@@ -35,6 +38,7 @@ public class Add_Task_Activity extends AppCompatActivity {
         taskName = findViewById(R.id.task_name);
         taskDate = findViewById(R.id.task_date);
         Intent intent = getIntent();
+        taskTime = findViewById(R.id.task_time);
         isUpdate = intent.getBooleanExtra(MainActivity.UPDATE_TAG, false);
         taskDBSQLiteHelper = new TaskDBSQLiteHelper(this);
         final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
@@ -51,8 +55,10 @@ public class Add_Task_Activity extends AppCompatActivity {
             invalidateOptionsMenu();
             oldTaskDate = intent.getStringExtra(MainActivity.TASK_DATE_TAG);
             oldTaskName = intent.getStringExtra(MainActivity.TASK_NAME_TAG);
+            String oldTaskTime = intent.getStringExtra(MainActivity.TASK_TIME_TAG);
             taskDate.setText(oldTaskDate);
             taskName.setText(oldTaskName);
+            taskTime.setText(oldTaskTime);
             final String dateValues[] = oldTaskDate.split("/");
             taskDate.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -61,6 +67,23 @@ public class Add_Task_Activity extends AppCompatActivity {
                             Integer.parseInt(dateValues[1])).show();
                 }
             });
+            final String temp[] = oldTaskTime.split(":");
+            taskTime.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    TimePickerDialog mTimePicker;
+                    mTimePicker = new TimePickerDialog(Add_Task_Activity.this, new TimePickerDialog.OnTimeSetListener() {
+                        @Override
+                        public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                            taskTime.setText(selectedHour + ":" + selectedMinute);
+                        }
+                    }, Integer.parseInt(temp[0]), Integer.parseInt(temp[1]), true);
+                    mTimePicker.setTitle("Select Time");
+                    mTimePicker.show();
+                }
+            });
+
         } else {
             taskDate.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -70,7 +93,26 @@ public class Add_Task_Activity extends AppCompatActivity {
                             myCalendar.get(Calendar.DAY_OF_MONTH)).show();
                 }
             });
+            taskTime.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Calendar mcurrentTime = Calendar.getInstance();
+                    int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
+                    int minute = mcurrentTime.get(Calendar.MINUTE);
+                    TimePickerDialog mTimePicker;
+                    mTimePicker = new TimePickerDialog(Add_Task_Activity.this, new TimePickerDialog.OnTimeSetListener() {
+                        @Override
+                        public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                            taskTime.setText(selectedHour + ":" + selectedMinute);
+                        }
+                    }, hour, minute, true);
+                    mTimePicker.setTitle("Select Time");
+                    mTimePicker.show();
+                }
+            });
         }
+
+
     }
 
     private void updateLabel() {
@@ -89,6 +131,7 @@ public class Add_Task_Activity extends AppCompatActivity {
     public void addTask(MenuItem item) {
         String nameTask = taskName.getText().toString();
         String dateTask = taskDate.getText().toString();
+        String timeTask = taskTime.getText().toString();
         if (nameTask.trim().length() < 2) {
             Toast.makeText(this, "Please enter task name", Toast.LENGTH_SHORT).show();
             return;
@@ -97,10 +140,15 @@ public class Add_Task_Activity extends AppCompatActivity {
             Toast.makeText(this, "Please enter task date", Toast.LENGTH_SHORT).show();
             return;
         }
+        if (timeTask.trim().length() < 2) {
+            Toast.makeText(this, "Please enter task time", Toast.LENGTH_SHORT).show();
+            return;
+        }
         SQLiteDatabase db = new TaskDBSQLiteHelper(this).getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(DBTask.Tasks.COLUMN_TASK_NAME, nameTask);
         contentValues.put(DBTask.Tasks.COLUMN_TASK_DATE, dateTask);
+        contentValues.put(DBTask.Tasks.COLUMN_TASK_TIME, timeTask);
         if (isUpdate) {
             String id = taskDBSQLiteHelper.getID(oldTaskName, oldTaskDate);
             db.update(DBTask.Tasks.TABLE_NAME, contentValues, "_ID = ? ", new String[]{id});

@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity implements TaskClickListener
     public static String UPDATE_TAG = "isUpdate";
     public static String TASK_NAME_TAG = "taskName";
     public static String TASK_DATE_TAG = "taskDate";
+    public static String TASK_TIME_TAG = "taskTime";
     Cursor todayTasks, tomorrowTasks, upcomingTasks;
     private RecyclerView todayTaskList, tomorrowTaskList, upcomingTaskList;
 
@@ -190,12 +191,13 @@ public class MainActivity extends AppCompatActivity implements TaskClickListener
 
     @Override
     public void onItemClick(View v, int position, String listType) {
-        String taskName = "", taskDate = "";
+        String taskName = "", taskDate = "", taskTime = "";
         if (listType.equals("today")) {
             if (todayTasks != null) {
                 todayTasks.moveToPosition(position);
                 taskName = todayTasks.getString(1);
                 taskDate = todayTasks.getString(2);
+                taskTime = todayTasks.getString(3);
             }
         }
         if (listType.equals("tomorrow")) {
@@ -203,6 +205,7 @@ public class MainActivity extends AppCompatActivity implements TaskClickListener
                 tomorrowTasks.moveToPosition(position);
                 taskName = tomorrowTasks.getString(1);
                 taskDate = tomorrowTasks.getString(2);
+                taskTime = tomorrowTasks.getString(3);
             }
         }
         if (listType.equals("upcoming")) {
@@ -210,12 +213,20 @@ public class MainActivity extends AppCompatActivity implements TaskClickListener
                 upcomingTasks.moveToPosition(position);
                 taskName = upcomingTasks.getString(1);
                 taskDate = upcomingTasks.getString(2);
+                taskTime = upcomingTasks.getString(3);
             }
         }
         Intent intent = new Intent(this, Add_Task_Activity.class);
         intent.putExtra(TASK_NAME_TAG, taskName);
         intent.putExtra(TASK_DATE_TAG, taskDate);
+        intent.putExtra(TASK_TIME_TAG, taskTime);
         intent.putExtra(UPDATE_TAG, true);
         startActivityForResult(intent, REQUEST_CODE);
+    }
+
+    public void openHistory(MenuItem item) {
+        Intent intent = new Intent(this, TaskHistory.class);
+        startActivity(intent);
+
     }
 }

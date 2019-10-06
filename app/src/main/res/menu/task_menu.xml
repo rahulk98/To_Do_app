@@ -7,5 +7,9 @@
         android:onClick="openResume"
         android:title="@string/about_me"
         app:showAsAction="never" />
-
+    <item
+        android:id="@+id/finished_tasks"
+        android:onClick="openHistory"
+        android:title="@string/task_history_label"
+        app:showAsAction="never"/>
 </menu>

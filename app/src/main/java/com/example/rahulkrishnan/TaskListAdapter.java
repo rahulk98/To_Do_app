@@ -34,7 +34,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
         if (cursor != null) {
             cursor.moveToFirst();
             while (!cursor.isAfterLast()) {
-                Pair<String, String> temp = new Pair<String, String>(cursor.getString(1), cursor.getString(2));
+                Pair<String, String> temp = new Pair<String, String>(cursor.getString(1), cursor.getString(2) + " " + cursor.getString(3));
                 list.add(temp);
                 cursor.moveToNext();
             }
