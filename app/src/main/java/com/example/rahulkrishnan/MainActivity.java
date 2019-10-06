@@ -9,10 +9,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -48,6 +50,78 @@ public class MainActivity extends AppCompatActivity implements TaskClickListener
             }
         });
         populateDB();
+        ItemTouchHelper todayhelper = new ItemTouchHelper(
+                new ItemTouchHelper.SimpleCallback(0,
+                        ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+                    @Override
+                    public boolean onMove(RecyclerView recyclerView,
+                                          RecyclerView.ViewHolder viewHolder,
+                                          RecyclerView.ViewHolder target) {
+                        return false;
+                    }
+
+                    @Override
+                    public void onSwiped(RecyclerView.ViewHolder viewHolder,
+                                         int direction) {
+                        int position = viewHolder.getAdapterPosition();
+                        Cursor temp = todayTasks;
+                        temp.moveToPosition(position);
+                        String taskName = todayTasks.getString(1);
+                        String taskDate = todayTasks.getString(2);
+                        myDb.deleteTask(taskName, taskDate);
+                        populateDB();
+                    }
+                });
+
+        todayhelper.attachToRecyclerView(todayTaskList);
+        ItemTouchHelper tomorrowhelper = new ItemTouchHelper(
+                new ItemTouchHelper.SimpleCallback(0,
+                        ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+                    @Override
+                    public boolean onMove(RecyclerView recyclerView,
+                                          RecyclerView.ViewHolder viewHolder,
+                                          RecyclerView.ViewHolder target) {
+                        return false;
+                    }
+
+                    @Override
+                    public void onSwiped(RecyclerView.ViewHolder viewHolder,
+                                         int direction) {
+                        int position = viewHolder.getAdapterPosition();
+                        Cursor temp = tomorrowTasks;
+                        temp.moveToPosition(position);
+                        String taskName = tomorrowTasks.getString(1);
+                        String taskDate = tomorrowTasks.getString(2);
+                        myDb.deleteTask(taskName, taskDate);
+                        populateDB();
+                    }
+                });
+
+        tomorrowhelper.attachToRecyclerView(tomorrowTaskList);
+        ItemTouchHelper upcominghelper = new ItemTouchHelper(
+                new ItemTouchHelper.SimpleCallback(0,
+                        ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+                    @Override
+                    public boolean onMove(RecyclerView recyclerView,
+                                          RecyclerView.ViewHolder viewHolder,
+                                          RecyclerView.ViewHolder target) {
+                        return false;
+                    }
+
+                    @Override
+                    public void onSwiped(RecyclerView.ViewHolder viewHolder,
+                                         int direction) {
+                        int position = viewHolder.getAdapterPosition();
+                        Cursor temp = upcomingTasks;
+                        temp.moveToPosition(position);
+                        String taskName = upcomingTasks.getString(1);
+                        String taskDate = upcomingTasks.getString(2);
+                        myDb.deleteTask(taskName, taskDate);
+                        populateDB();
+                    }
+                });
+
+        upcominghelper.attachToRecyclerView(upcomingTaskList);
     }
 
     @Override
