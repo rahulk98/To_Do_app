@@ -1,12 +1,16 @@
 package com.example.rahulkrishnan;
 
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -22,15 +26,24 @@ import java.util.Calendar;
 import java.util.Locale;
 
 public class Add_Task_Activity extends AppCompatActivity {
+    public static final String TASK_DATE_LABEL = "date_label";
+    public static final String TASK_TIME_LABEL = "time_label";
     final Calendar myCalendar = Calendar.getInstance();
     public Boolean isUpdate;
     EditText taskName;
     EditText taskDate;
+    public static final String TASK_NAME_LABEL = "task_name";
     EditText taskTime;
     String oldTaskName;
+    private NotificationManager mNotificationManager;
+    private static final int NOTIFICATION_ID = 0;
+
+    // Notification channel ID.
+    private static final String PRIMARY_CHANNEL_ID =
+            "primary_notification_channel";
     String oldTaskDate;
     TaskDBSQLiteHelper taskDBSQLiteHelper;
-
+    public static int REQUEST_CODE = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -128,6 +141,25 @@ public class Add_Task_Activity extends AppCompatActivity {
         return true;
     }
 
+    public void setReminder (int d, int m, int y, int h, int min, String taskName, String taskDate, String taskTime) {
+        Calendar calendar = Calendar. getInstance () ;
+        calendar.set(Calendar. SECOND , 1 ) ;
+        calendar.set(Calendar. MINUTE , min) ;
+        calendar.set(Calendar. HOUR_OF_DAY , h) ;
+        calendar.set(Calendar. DAY_OF_MONTH , d ) ;
+        calendar.set(Calendar.MONTH, m - 1);
+        calendar.set(Calendar.YEAR, y);
+        Intent notifyIntent = new Intent(this, AlarmReceiver.class);
+        notifyIntent.putExtra(TASK_NAME_LABEL, taskName);
+        notifyIntent.putExtra(TASK_DATE_LABEL, taskDate);
+        notifyIntent.putExtra(TASK_TIME_LABEL, taskTime);
+        int id = (int) System.currentTimeMillis();
+        PendingIntent notifyPendingIntent = PendingIntent.getBroadcast
+                (this, id, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), notifyPendingIntent);
+    }
+
     public void addTask(MenuItem item) {
         String nameTask = taskName.getText().toString();
         String dateTask = taskDate.getText().toString();
@@ -157,6 +189,16 @@ public class Add_Task_Activity extends AppCompatActivity {
 
             long row = db.insert(DBTask.Tasks.TABLE_NAME, null, contentValues);
         }
+        Log.d("sas", dateTask + " " + nameTask);
+        String[] dateArray = dateTask.split("/");
+        String[] timeArray;
+        timeArray = timeTask.split(":");
+        int day = Integer.parseInt(dateArray[1]);
+        int month = Integer.parseInt(dateArray[0]);
+        int year = Integer.parseInt(dateArray[2]);
+        int hour = Integer.parseInt(timeArray[0]);
+        int minute = Integer.parseInt(timeArray[1]);
+        setReminder(day, month, year, hour, minute, nameTask, dateTask, timeTask);
         setResult(RESULT_OK);
         finish();
     }
