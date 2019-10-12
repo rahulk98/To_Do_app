@@ -28,6 +28,7 @@ import java.util.Locale;
 public class Add_Task_Activity extends AppCompatActivity {
     public static final String TASK_DATE_LABEL = "date_label";
     public static final String TASK_TIME_LABEL = "time_label";
+    private TaskDBSQLiteHelper myDb;
     final Calendar myCalendar = Calendar.getInstance();
     public Boolean isUpdate;
     EditText taskName;
@@ -46,10 +47,12 @@ public class Add_Task_Activity extends AppCompatActivity {
     public static int REQUEST_CODE = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add__task_);
         taskName = findViewById(R.id.task_name);
         taskDate = findViewById(R.id.task_date);
+        myDb = new TaskDBSQLiteHelper(this);
         Intent intent = getIntent();
         taskTime = findViewById(R.id.task_time);
         isUpdate = intent.getBooleanExtra(MainActivity.UPDATE_TAG, false);
@@ -153,7 +156,7 @@ public class Add_Task_Activity extends AppCompatActivity {
         notifyIntent.putExtra(TASK_NAME_LABEL, taskName);
         notifyIntent.putExtra(TASK_DATE_LABEL, taskDate);
         notifyIntent.putExtra(TASK_TIME_LABEL, taskTime);
-        int id = (int) System.currentTimeMillis();
+        int id = Integer.parseInt(myDb.getID(taskName, taskDate));
         PendingIntent notifyPendingIntent = PendingIntent.getBroadcast
                 (this, id, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);

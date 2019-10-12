@@ -26,11 +26,7 @@ public class TaskHistory extends AppCompatActivity implements TaskClickListener{
         taskFinishedList = findViewById(R.id.history_recyclerview);
         taskOverDueList = findViewById(R.id.unfinished_recyclerview);
         myDb = new TaskDBSQLiteHelper(this);
-        historyTaskList = myDb.getDoneTasks();
-        Calendar calendar = Calendar.getInstance();
-        String myFormat = "MM/dd/yyyy"; //In which you need put here
-        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-        overDueTaskList = myDb.getOverDueTaks(sdf.format(calendar.getTime()));
+
         ItemTouchHelper finishedTaskHelper = new ItemTouchHelper(
                 new ItemTouchHelper.SimpleCallback(0,
                         ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
@@ -45,8 +41,7 @@ public class TaskHistory extends AppCompatActivity implements TaskClickListener{
                     public void onSwiped(RecyclerView.ViewHolder viewHolder,
                                          int direction) {
                         int position = viewHolder.getAdapterPosition();
-                        Cursor temp = historyTaskList;
-                        temp.moveToPosition(position);
+                        historyTaskList.moveToPosition(position);
                         String taskName = historyTaskList.getString(1);
                         String taskDate = historyTaskList.getString(2);
                         myDb.deleteTask(taskName, taskDate);
@@ -71,7 +66,7 @@ public class TaskHistory extends AppCompatActivity implements TaskClickListener{
                                          int direction) {
                         int position = viewHolder.getAdapterPosition();
                         Cursor temp = overDueTaskList;
-                        temp.moveToPosition(position);
+                        overDueTaskList.moveToPosition(position);
                         String taskName = overDueTaskList.getString(1);
                         String taskDate = overDueTaskList.getString(2);
                         myDb.deleteTask(taskName, taskDate);
@@ -84,12 +79,15 @@ public class TaskHistory extends AppCompatActivity implements TaskClickListener{
     }
 
     private void populateDB() {
-
+        historyTaskList = myDb.getDoneTasks();
+        Calendar calendar = Calendar.getInstance();
+        String myFormat = "MM/dd/yyyy"; //In which you need put here
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+        overDueTaskList = myDb.getOverDueTaks(sdf.format(calendar.getTime()));
         finishedList = new TaskListAdapter(historyTaskList, this, getString(R.string.history_label));
         taskFinishedList.setLayoutManager(new LinearLayoutManager(this));
         taskFinishedList.setAdapter(finishedList);
         taskFinishedList.setNestedScrollingEnabled(false);
-
         overDueList = new TaskListAdapter(overDueTaskList, this, "Overdue");
         taskOverDueList.setLayoutManager(new LinearLayoutManager(this));
         taskOverDueList.setAdapter(overDueList);

@@ -63,7 +63,6 @@ public class TaskDBSQLiteHelper extends SQLiteOpenHelper {
     }
     public void markDone(String id){
         SQLiteDatabase db = this.getWritableDatabase();
-//        Cursor cursor = db.rawQuery("update "+ DBTask.Tasks.TABLE_NAME + " set " + DBTask.Tasks.COLUMN_TASK_DONE + " = 1" + " WHERE _ID = " + id, null);
         ContentValues cv = new ContentValues();
         cv.put(DBTask.Tasks.COLUMN_TASK_DONE, 1);
         db.update(DBTask.Tasks.TABLE_NAME, cv, "_ID = ? ", new String[] {id});

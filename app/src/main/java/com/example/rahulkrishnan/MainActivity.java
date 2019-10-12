@@ -247,7 +247,7 @@ public class MainActivity extends AppCompatActivity implements TaskClickListener
             }
         });
         alert.setTitle("Task");
-        alert.setMessage(taskName + " Due on " + taskDate + " " + taskTime);
+        alert.setMessage(taskName + "\nDue on " + taskDate + " " + taskTime);
         alert.create();
         alert.show();
 

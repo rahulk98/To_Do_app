@@ -8,8 +8,9 @@
         android:title="@string/about_me"
         app:showAsAction="never" />
     <item
-        android:id="@+id/finished_tasks"
+        android:id="@+id/task_history"
         android:onClick="openHistory"
         android:title="@string/task_history_label"
-        app:showAsAction="never"/>
+        android:icon="@drawable/ic_history"
+        app:showAsAction="always"/>
 </menu>
