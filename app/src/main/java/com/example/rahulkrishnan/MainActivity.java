@@ -1,10 +1,13 @@
 package com.example.rahulkrishnan;
 
+import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -65,8 +68,7 @@ public class MainActivity extends AppCompatActivity implements TaskClickListener
                     public void onSwiped(RecyclerView.ViewHolder viewHolder,
                                          int direction) {
                         int position = viewHolder.getAdapterPosition();
-                        Cursor temp = todayTasks;
-                        temp.moveToPosition(position);
+                        todayTasks.moveToPosition(position);
                         String taskName = todayTasks.getString(1);
                         String taskDate = todayTasks.getString(2);
                         myDb.deleteTask(taskName, taskDate);
@@ -89,8 +91,7 @@ public class MainActivity extends AppCompatActivity implements TaskClickListener
                     public void onSwiped(RecyclerView.ViewHolder viewHolder,
                                          int direction) {
                         int position = viewHolder.getAdapterPosition();
-                        Cursor temp = tomorrowTasks;
-                        temp.moveToPosition(position);
+                        tomorrowTasks.moveToPosition(position);
                         String taskName = tomorrowTasks.getString(1);
                         String taskDate = tomorrowTasks.getString(2);
                         myDb.deleteTask(taskName, taskDate);
@@ -113,8 +114,7 @@ public class MainActivity extends AppCompatActivity implements TaskClickListener
                     public void onSwiped(RecyclerView.ViewHolder viewHolder,
                                          int direction) {
                         int position = viewHolder.getAdapterPosition();
-                        Cursor temp = upcomingTasks;
-                        temp.moveToPosition(position);
+                        upcomingTasks.moveToPosition(position);
                         String taskName = upcomingTasks.getString(1);
                         String taskDate = upcomingTasks.getString(2);
                         myDb.deleteTask(taskName, taskDate);
@@ -216,12 +216,41 @@ public class MainActivity extends AppCompatActivity implements TaskClickListener
                 taskTime = upcomingTasks.getString(3);
             }
         }
-        Intent intent = new Intent(this, Add_Task_Activity.class);
-        intent.putExtra(TASK_NAME_TAG, taskName);
-        intent.putExtra(TASK_DATE_TAG, taskDate);
-        intent.putExtra(TASK_TIME_TAG, taskTime);
-        intent.putExtra(UPDATE_TAG, true);
-        startActivityForResult(intent, REQUEST_CODE);
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        final String finalTaskName = taskName;
+        final String finalTaskDate = taskDate;
+        final String finalTaskTime = taskTime;
+        alert.setPositiveButton("Mark Done", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String id = myDb.getID(finalTaskName, finalTaskDate);
+                myDb.markDone(id);
+                populateDB();
+            }
+        });
+        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        alert.setNeutralButton("Edit Task", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent intent = new Intent(MainActivity.this, Add_Task_Activity.class);
+                intent.putExtra(TASK_NAME_TAG, finalTaskName);
+                intent.putExtra(TASK_DATE_TAG, finalTaskDate);
+                intent.putExtra(TASK_TIME_TAG, finalTaskTime);
+                intent.putExtra(UPDATE_TAG, true);
+                startActivityForResult(intent, REQUEST_CODE);
+            }
+        });
+        alert.setTitle("Task");
+        alert.setMessage(taskName + " Due on " + taskDate + " " + taskTime);
+        alert.create();
+        alert.show();
+
     }
 
     public void openHistory(MenuItem item) {

@@ -1,5 +1,6 @@
 package com.example.rahulkrishnan;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -59,5 +60,17 @@ public class TaskDBSQLiteHelper extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery("select _ID from " + DBTask.Tasks.TABLE_NAME + " WHERE " + DBTask.Tasks.COLUMN_TASK_NAME + " = '" + taskName + "' AND " + DBTask.Tasks.COLUMN_TASK_DATE + " = '" + taskDate + "'", null);
         cursor.moveToFirst();
         return cursor.getString(0);
+    }
+    public void markDone(String id){
+        SQLiteDatabase db = this.getWritableDatabase();
+//        Cursor cursor = db.rawQuery("update "+ DBTask.Tasks.TABLE_NAME + " set " + DBTask.Tasks.COLUMN_TASK_DONE + " = 1" + " WHERE _ID = " + id, null);
+        ContentValues cv = new ContentValues();
+        cv.put(DBTask.Tasks.COLUMN_TASK_DONE, 1);
+        db.update(DBTask.Tasks.TABLE_NAME, cv, "_ID = ? ", new String[] {id});
+    }
+    public Cursor getOverDueTaks(String date) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res = db.rawQuery("select * from " + DBTask.Tasks.TABLE_NAME + " WHERE " + DBTask.Tasks.COLUMN_TASK_DATE + " < '" + date + "' and "+DBTask.Tasks.COLUMN_TASK_DONE  +" == 0  order by _ID desc", null);
+        return res;
     }
 }
