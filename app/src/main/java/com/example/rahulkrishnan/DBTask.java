@@ -18,7 +18,7 @@ public final class DBTask {
                 COLUMN_TASK_NAME + " TEXT, " +
                 COLUMN_TASK_DATE + " TEXT, " +
                 COLUMN_TASK_TIME + " TEXT, " +
-                COLUMN_TASK_DONE + " INTEGER DEFAULT 0" +")";
+                COLUMN_TASK_DONE + " INTEGER DEFAULT 0" + ")";
     }
 }
 

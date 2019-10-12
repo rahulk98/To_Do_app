@@ -33,23 +33,23 @@ public class TaskDBSQLiteHelper extends SQLiteOpenHelper {
 
     public Cursor getTodayTasks(String date) {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor res = db.rawQuery("select * from " + DBTask.Tasks.TABLE_NAME + " WHERE " + DBTask.Tasks.COLUMN_TASK_DATE + " = '" + date + "' and "+DBTask.Tasks.COLUMN_TASK_DONE  +" == 0  order by _ID desc", null);
+        Cursor res = db.rawQuery("select * from " + DBTask.Tasks.TABLE_NAME + " WHERE " + DBTask.Tasks.COLUMN_TASK_DATE + " = '" + date + "' and " + DBTask.Tasks.COLUMN_TASK_DONE + " == 0  order by _ID desc", null);
         return res;
     }
 
     public Cursor getTomorrowTasks(String date) {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor res = db.rawQuery("select * from " + DBTask.Tasks.TABLE_NAME + " WHERE " + DBTask.Tasks.COLUMN_TASK_DATE + " = '" + date + "' and "+DBTask.Tasks.COLUMN_TASK_DONE  +" == 0 order by _ID desc", null);
+        Cursor res = db.rawQuery("select * from " + DBTask.Tasks.TABLE_NAME + " WHERE " + DBTask.Tasks.COLUMN_TASK_DATE + " = '" + date + "' and " + DBTask.Tasks.COLUMN_TASK_DONE + " == 0 order by _ID desc", null);
         return res;
     }
 
     public Cursor getUpcomingTasks(String date) {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor res = db.rawQuery("select * from " + DBTask.Tasks.TABLE_NAME + " WHERE " + DBTask.Tasks.COLUMN_TASK_DATE + " > '" + date + "' and "+DBTask.Tasks.COLUMN_TASK_DONE  +" == 0  order by _ID desc", null);
+        Cursor res = db.rawQuery("select * from " + DBTask.Tasks.TABLE_NAME + " WHERE " + DBTask.Tasks.COLUMN_TASK_DATE + " > '" + date + "' and " + DBTask.Tasks.COLUMN_TASK_DONE + " == 0  order by _ID desc", null);
         return res;
     }
 
-    public Cursor getDoneTasks(){
+    public Cursor getDoneTasks() {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor res = db.rawQuery("select * from " + DBTask.Tasks.TABLE_NAME + " WHERE " + DBTask.Tasks.COLUMN_TASK_DONE + " == 1 order by _ID desc", null);
         return res;
@@ -61,15 +61,17 @@ public class TaskDBSQLiteHelper extends SQLiteOpenHelper {
         cursor.moveToFirst();
         return cursor.getString(0);
     }
-    public void markDone(String id){
+
+    public void markDone(String id) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(DBTask.Tasks.COLUMN_TASK_DONE, 1);
-        db.update(DBTask.Tasks.TABLE_NAME, cv, "_ID = ? ", new String[] {id});
+        db.update(DBTask.Tasks.TABLE_NAME, cv, "_ID = ? ", new String[]{id});
     }
+
     public Cursor getOverDueTaks(String date) {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor res = db.rawQuery("select * from " + DBTask.Tasks.TABLE_NAME + " WHERE " + DBTask.Tasks.COLUMN_TASK_DATE + " < '" + date + "' and "+DBTask.Tasks.COLUMN_TASK_DONE  +" == 0  order by _ID desc", null);
+        Cursor res = db.rawQuery("select * from " + DBTask.Tasks.TABLE_NAME + " WHERE " + DBTask.Tasks.COLUMN_TASK_DATE + " < '" + date + "' and " + DBTask.Tasks.COLUMN_TASK_DONE + " == 0  order by _ID desc", null);
         return res;
     }
 }

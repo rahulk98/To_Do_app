@@ -23,6 +23,7 @@ public class AlarmReceiver extends BroadcastReceiver {
     // Notification channel ID.
     private static final String PRIMARY_CHANNEL_ID =
             "primary_notification_channel";
+
     @Override
     public void onReceive(Context context, Intent intent) {
         createNotificationChannel(context);
@@ -32,7 +33,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         deliverNotification(context, taskName, taskDate, taskTime);
     }
 
-    public void deliverNotification(Context context, String name, String date, String time){
+    public void deliverNotification(Context context, String name, String date, String time) {
         Intent contentIntent = new Intent(context, Add_Task_Activity.class);
         contentIntent.putExtra(MainActivity.TASK_NAME_TAG, name);
         contentIntent.putExtra(MainActivity.TASK_DATE_TAG, date);
@@ -41,7 +42,6 @@ public class AlarmReceiver extends BroadcastReceiver {
         int id = (int) System.currentTimeMillis();
         PendingIntent contentPendingIntent = PendingIntent.getActivity
                 (context, id, contentIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        Log.d("Dsd", contentPendingIntent+"");
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, PRIMARY_CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_stat_done_all)
@@ -50,10 +50,11 @@ public class AlarmReceiver extends BroadcastReceiver {
                 .setContentIntent(contentPendingIntent)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setAutoCancel(true)
-                .setVibrate(new long[] { 1000, 1000, 1000, 1000, 1000 })
+                .setVibrate(new long[]{1000, 1000, 1000, 1000, 1000})
                 .setDefaults(NotificationCompat.DEFAULT_ALL);
         mNotificationManager.notify(NOTIFICATION_ID, builder.build());
     }
+
     public void createNotificationChannel(Context context) {
 
         // Create a notification manager object.
@@ -68,7 +69,7 @@ public class AlarmReceiver extends BroadcastReceiver {
             // Create the NotificationChannel with all the parameters.
             NotificationChannel notificationChannel = new NotificationChannel
                     (PRIMARY_CHANNEL_ID,
-                            "Task Due Notification",
+                            context.getString(R.string.notification_label),
                             NotificationManager.IMPORTANCE_HIGH);
 
             notificationChannel.enableLights(true);

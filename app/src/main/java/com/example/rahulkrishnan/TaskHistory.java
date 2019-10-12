@@ -12,13 +12,14 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
-public class TaskHistory extends AppCompatActivity implements TaskClickListener{
+public class TaskHistory extends AppCompatActivity implements TaskClickListener {
     RecyclerView taskFinishedList;
     TaskListAdapter finishedList;
     private TaskDBSQLiteHelper myDb;
     RecyclerView taskOverDueList;
     TaskListAdapter overDueList;
     Cursor historyTaskList, overDueTaskList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,7 +51,6 @@ public class TaskHistory extends AppCompatActivity implements TaskClickListener{
                 });
 
         finishedTaskHelper.attachToRecyclerView(taskFinishedList);
-
         ItemTouchHelper overDueTaskHelper = new ItemTouchHelper(
                 new ItemTouchHelper.SimpleCallback(0,
                         ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
@@ -88,7 +88,7 @@ public class TaskHistory extends AppCompatActivity implements TaskClickListener{
         taskFinishedList.setLayoutManager(new LinearLayoutManager(this));
         taskFinishedList.setAdapter(finishedList);
         taskFinishedList.setNestedScrollingEnabled(false);
-        overDueList = new TaskListAdapter(overDueTaskList, this, "Overdue");
+        overDueList = new TaskListAdapter(overDueTaskList, this, getString(R.string.overdue_label));
         taskOverDueList.setLayoutManager(new LinearLayoutManager(this));
         taskOverDueList.setAdapter(overDueList);
         taskOverDueList.setNestedScrollingEnabled(false);

@@ -32,6 +32,14 @@
     <string name="empty_task_label">No tasks due</string>
     <string name="about_developer_label">About Developer</string>
     <string name="time_label">Enter time</string>
-    <string name="history_label">history</string>
+    <string name="history_label">History</string>
     <string name="task_history_label">Task History</string>
+    <string name="time_picker_dialog">Select Time</string>
+    <string name="notification_label">Task Due Notification</string>
+    <string name="date_format_label">MM/dd/yyyy</string>
+    <string name="mark_done_label">Mark Done</string>
+    <string name="cancel_label">Cancel</string>
+    <string name="edit_task_label">Edit Task</string>
+    <string name="task_label">Task</string>
+    <string name="overdue_label">Overdue</string>
 </resources>

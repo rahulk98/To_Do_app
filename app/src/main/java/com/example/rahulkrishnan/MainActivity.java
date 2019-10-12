@@ -154,15 +154,15 @@ public class MainActivity extends AppCompatActivity implements TaskClickListener
 
     public void populateDB() {
         Calendar calendar = Calendar.getInstance();
-        String myFormat = "MM/dd/yyyy"; //In which you need put here
+        String myFormat = getString(R.string.date_format_label); //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
         todayTasks = myDb.getTodayTasks(sdf.format(calendar.getTime()));
         calendar.add(Calendar.DAY_OF_MONTH, 1); //Increment date to get tasks from tomorrow
         tomorrowTasks = myDb.getTomorrowTasks(sdf.format(calendar.getTime()));
         upcomingTasks = myDb.getUpcomingTasks(sdf.format(calendar.getTime()));
-        TaskListAdapter todayListAdapter = new TaskListAdapter(todayTasks, this, "today");
-        TaskListAdapter tomorrowListAdapter = new TaskListAdapter(tomorrowTasks, this, "tomorrow");
-        TaskListAdapter upcomingListAdapter = new TaskListAdapter(upcomingTasks, this, "upcoming");
+        TaskListAdapter todayListAdapter = new TaskListAdapter(todayTasks, this, getString(R.string.today_text));
+        TaskListAdapter tomorrowListAdapter = new TaskListAdapter(tomorrowTasks, this, getString(R.string.tomorrow_text));
+        TaskListAdapter upcomingListAdapter = new TaskListAdapter(upcomingTasks, this, getString(R.string.upcoming_text));
         if (todayTasks.getCount() == 0) {
             findViewById(R.id.today_tasks_empty_TV).setVisibility(View.VISIBLE);
         }
@@ -192,7 +192,7 @@ public class MainActivity extends AppCompatActivity implements TaskClickListener
     @Override
     public void onItemClick(View v, int position, String listType) {
         String taskName = "", taskDate = "", taskTime = "";
-        if (listType.equals("today")) {
+        if (listType.equals(getString(R.string.today_text))) {
             if (todayTasks != null) {
                 todayTasks.moveToPosition(position);
                 taskName = todayTasks.getString(1);
@@ -200,7 +200,7 @@ public class MainActivity extends AppCompatActivity implements TaskClickListener
                 taskTime = todayTasks.getString(3);
             }
         }
-        if (listType.equals("tomorrow")) {
+        if (listType.equals(getString(R.string.tomorrow_text))) {
             if (tomorrowTasks != null) {
                 tomorrowTasks.moveToPosition(position);
                 taskName = tomorrowTasks.getString(1);
@@ -208,7 +208,7 @@ public class MainActivity extends AppCompatActivity implements TaskClickListener
                 taskTime = tomorrowTasks.getString(3);
             }
         }
-        if (listType.equals("upcoming")) {
+        if (listType.equals(getString(R.string.upcoming_text))) {
             if (upcomingTasks != null) {
                 upcomingTasks.moveToPosition(position);
                 taskName = upcomingTasks.getString(1);
@@ -220,7 +220,7 @@ public class MainActivity extends AppCompatActivity implements TaskClickListener
         final String finalTaskName = taskName;
         final String finalTaskDate = taskDate;
         final String finalTaskTime = taskTime;
-        alert.setPositiveButton("Mark Done", new DialogInterface.OnClickListener() {
+        alert.setPositiveButton(getString(R.string.mark_done_label), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 String id = myDb.getID(finalTaskName, finalTaskDate);
@@ -228,14 +228,14 @@ public class MainActivity extends AppCompatActivity implements TaskClickListener
                 populateDB();
             }
         });
-        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        alert.setNegativeButton(getString(R.string.cancel_label), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
             }
         });
 
-        alert.setNeutralButton("Edit Task", new DialogInterface.OnClickListener() {
+        alert.setNeutralButton(getString(R.string.edit_task_label), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Intent intent = new Intent(MainActivity.this, Add_Task_Activity.class);
@@ -246,7 +246,7 @@ public class MainActivity extends AppCompatActivity implements TaskClickListener
                 startActivityForResult(intent, REQUEST_CODE);
             }
         });
-        alert.setTitle("Task");
+        alert.setTitle(getString(R.string.task_label));
         alert.setMessage(taskName + "\nDue on " + taskDate + " " + taskTime);
         alert.create();
         alert.show();

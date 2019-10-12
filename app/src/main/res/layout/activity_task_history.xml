@@ -31,7 +31,7 @@
 
             <TextView
                 style="@style/list_header_style"
-                android:text="Finished Tasks" />
+                android:text= "@string/history_label" />
 
             <android.support.v7.widget.CardView
                 style="@style/card_view_style">
@@ -44,7 +44,7 @@
 
             <TextView
                 style="@style/list_header_style"
-                android:text="Overdue Tasks" />
+                android:text="@string/overdue_label" />
 
             <android.support.v7.widget.CardView
                 style="@style/card_view_style">

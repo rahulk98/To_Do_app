@@ -45,6 +45,7 @@ public class Add_Task_Activity extends AppCompatActivity {
     String oldTaskDate;
     TaskDBSQLiteHelper taskDBSQLiteHelper;
     public static int REQUEST_CODE = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -95,7 +96,7 @@ public class Add_Task_Activity extends AppCompatActivity {
                             taskTime.setText(selectedHour + ":" + selectedMinute);
                         }
                     }, Integer.parseInt(temp[0]), Integer.parseInt(temp[1]), true);
-                    mTimePicker.setTitle("Select Time");
+                    mTimePicker.setTitle(getString(R.string.time_picker_dialog));
                     mTimePicker.show();
                 }
             });
@@ -122,7 +123,7 @@ public class Add_Task_Activity extends AppCompatActivity {
                             taskTime.setText(selectedHour + ":" + selectedMinute);
                         }
                     }, hour, minute, true);
-                    mTimePicker.setTitle("Select Time");
+                    mTimePicker.setTitle(getString(R.string.time_picker_dialog));
                     mTimePicker.show();
                 }
             });
@@ -144,12 +145,12 @@ public class Add_Task_Activity extends AppCompatActivity {
         return true;
     }
 
-    public void setReminder (int d, int m, int y, int h, int min, String taskName, String taskDate, String taskTime) {
-        Calendar calendar = Calendar. getInstance () ;
-        calendar.set(Calendar. SECOND , 1 ) ;
-        calendar.set(Calendar. MINUTE , min) ;
-        calendar.set(Calendar. HOUR_OF_DAY , h) ;
-        calendar.set(Calendar. DAY_OF_MONTH , d ) ;
+    public void setReminder(int d, int m, int y, int h, int min, String taskName, String taskDate, String taskTime) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.SECOND, 1);
+        calendar.set(Calendar.MINUTE, min);
+        calendar.set(Calendar.HOUR_OF_DAY, h);
+        calendar.set(Calendar.DAY_OF_MONTH, d);
         calendar.set(Calendar.MONTH, m - 1);
         calendar.set(Calendar.YEAR, y);
         Intent notifyIntent = new Intent(this, AlarmReceiver.class);
@@ -161,6 +162,7 @@ public class Add_Task_Activity extends AppCompatActivity {
                 (this, id, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
         alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), notifyPendingIntent);
+        Toast.makeText(this, "Reminder Set", Toast.LENGTH_SHORT).show();
     }
 
     public void addTask(MenuItem item) {
