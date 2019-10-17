@@ -69,7 +69,7 @@ public class TaskDBSQLiteHelper extends SQLiteOpenHelper {
         db.update(DBTask.Tasks.TABLE_NAME, cv, "_ID = ? ", new String[]{id});
     }
 
-    public Cursor getOverDueTaks(String date) {
+    public Cursor getOverDueTasks(String date) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor res = db.rawQuery("select * from " + DBTask.Tasks.TABLE_NAME + " WHERE " + DBTask.Tasks.COLUMN_TASK_DATE + " < '" + date + "' and " + DBTask.Tasks.COLUMN_TASK_DONE + " == 0  order by _ID desc", null);
         return res;

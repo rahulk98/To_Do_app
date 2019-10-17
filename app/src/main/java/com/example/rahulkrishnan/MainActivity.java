@@ -1,6 +1,5 @@
 package com.example.rahulkrishnan;
 
-import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -17,7 +16,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;

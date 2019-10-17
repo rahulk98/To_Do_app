@@ -42,4 +42,8 @@
     <string name="edit_task_label">Edit Task</string>
     <string name="task_label">Task</string>
     <string name="overdue_label">Overdue</string>
+    <string name="reminder_msg_label">Reminder Set</string>
+    <string name="task_name_prompt">Please enter task name</string>
+    <string name="task_date_prompt">Please enter task date</string>
+    <string name="task_time_prompt">Please enter task time</string>
 </resources>

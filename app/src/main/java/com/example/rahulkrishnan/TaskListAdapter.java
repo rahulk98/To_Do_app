@@ -48,7 +48,6 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
         viewHolder.taskName.setText(row_item.first);
         String dateTemp = "Due on " + row_item.second;
         viewHolder.taskDate.setText(dateTemp);
-
     }
 
     @Override

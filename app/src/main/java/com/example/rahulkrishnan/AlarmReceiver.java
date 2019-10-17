@@ -19,7 +19,6 @@ public class AlarmReceiver extends BroadcastReceiver {
 
     private NotificationManager mNotificationManager;
     private static final int NOTIFICATION_ID = 0;
-
     // Notification channel ID.
     private static final String PRIMARY_CHANNEL_ID =
             "primary_notification_channel";
@@ -42,7 +41,6 @@ public class AlarmReceiver extends BroadcastReceiver {
         int id = (int) System.currentTimeMillis();
         PendingIntent contentPendingIntent = PendingIntent.getActivity
                 (context, id, contentIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, PRIMARY_CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_stat_done_all)
                 .setContentTitle(name)
@@ -56,28 +54,18 @@ public class AlarmReceiver extends BroadcastReceiver {
     }
 
     public void createNotificationChannel(Context context) {
-
-        // Create a notification manager object.
         mNotificationManager =
                 (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
-
-        // Notification channels are only available in OREO and higher.
-        // So, add a check on SDK version.
         if (android.os.Build.VERSION.SDK_INT >=
                 android.os.Build.VERSION_CODES.O) {
-
-            // Create the NotificationChannel with all the parameters.
             NotificationChannel notificationChannel = new NotificationChannel
                     (PRIMARY_CHANNEL_ID,
                             context.getString(R.string.notification_label),
                             NotificationManager.IMPORTANCE_HIGH);
-
             notificationChannel.enableLights(true);
             notificationChannel.setLightColor(Color.RED);
             mNotificationManager.createNotificationChannel(notificationChannel);
         }
-
-
     }
 
 }

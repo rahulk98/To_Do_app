@@ -2,7 +2,6 @@ package com.example.rahulkrishnan;
 
 import android.app.AlarmManager;
 import android.app.DatePickerDialog;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.ContentValues;
@@ -36,19 +35,11 @@ public class Add_Task_Activity extends AppCompatActivity {
     public static final String TASK_NAME_LABEL = "task_name";
     EditText taskTime;
     String oldTaskName;
-    private NotificationManager mNotificationManager;
-    private static final int NOTIFICATION_ID = 0;
-
-    // Notification channel ID.
-    private static final String PRIMARY_CHANNEL_ID =
-            "primary_notification_channel";
     String oldTaskDate;
     TaskDBSQLiteHelper taskDBSQLiteHelper;
-    public static int REQUEST_CODE = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add__task_);
         taskName = findViewById(R.id.task_name);
@@ -76,7 +67,7 @@ public class Add_Task_Activity extends AppCompatActivity {
             taskDate.setText(oldTaskDate);
             taskName.setText(oldTaskName);
             taskTime.setText(oldTaskTime);
-            final String dateValues[] = oldTaskDate.split("/");
+            final String[] dateValues = oldTaskDate.split("/");
             taskDate.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -133,7 +124,7 @@ public class Add_Task_Activity extends AppCompatActivity {
     }
 
     private void updateLabel() {
-        String myFormat = "MM/dd/yyyy";
+        String myFormat = getString(R.string.date_format_label);
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
         taskDate.setText(sdf.format(myCalendar.getTime()));
     }
@@ -162,7 +153,7 @@ public class Add_Task_Activity extends AppCompatActivity {
                 (this, id, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
         alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), notifyPendingIntent);
-        Toast.makeText(this, "Reminder Set", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, getString(R.string.reminder_msg_label), Toast.LENGTH_SHORT).show();
     }
 
     public void addTask(MenuItem item) {
@@ -170,15 +161,15 @@ public class Add_Task_Activity extends AppCompatActivity {
         String dateTask = taskDate.getText().toString();
         String timeTask = taskTime.getText().toString();
         if (nameTask.trim().length() < 2) {
-            Toast.makeText(this, "Please enter task name", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.task_name_prompt), Toast.LENGTH_SHORT).show();
             return;
         }
         if (dateTask.trim().length() < 2) {
-            Toast.makeText(this, "Please enter task date", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.task_date_prompt), Toast.LENGTH_SHORT).show();
             return;
         }
         if (timeTask.trim().length() < 2) {
-            Toast.makeText(this, "Please enter task time", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.task_time_prompt), Toast.LENGTH_SHORT).show();
             return;
         }
         SQLiteDatabase db = new TaskDBSQLiteHelper(this).getWritableDatabase();

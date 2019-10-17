@@ -73,7 +73,6 @@ public class TaskHistory extends AppCompatActivity implements TaskClickListener 
                         populateDB();
                     }
                 });
-
         overDueTaskHelper.attachToRecyclerView(taskOverDueList);
         populateDB();
     }
@@ -83,7 +82,7 @@ public class TaskHistory extends AppCompatActivity implements TaskClickListener 
         Calendar calendar = Calendar.getInstance();
         String myFormat = "MM/dd/yyyy"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-        overDueTaskList = myDb.getOverDueTaks(sdf.format(calendar.getTime()));
+        overDueTaskList = myDb.getOverDueTasks(sdf.format(calendar.getTime()));
         finishedList = new TaskListAdapter(historyTaskList, this, getString(R.string.history_label));
         taskFinishedList.setLayoutManager(new LinearLayoutManager(this));
         taskFinishedList.setAdapter(finishedList);
@@ -92,11 +91,9 @@ public class TaskHistory extends AppCompatActivity implements TaskClickListener 
         taskOverDueList.setLayoutManager(new LinearLayoutManager(this));
         taskOverDueList.setAdapter(overDueList);
         taskOverDueList.setNestedScrollingEnabled(false);
-
     }
 
     @Override
     public void onItemClick(View v, int position, String listType) {
-
     }
 }
