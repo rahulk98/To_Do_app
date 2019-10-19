@@ -83,7 +83,7 @@ public class TaskHistory extends AppCompatActivity implements TaskClickListener 
         String myFormat = "MM/dd/yyyy"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
         overDueTaskList = myDb.getOverDueTasks(sdf.format(calendar.getTime()));
-        finishedList = new TaskListAdapter(historyTaskList, this, getString(R.string.history_label));
+        finishedList = new TaskListAdapter(historyTaskList, this, getString(R.string.finished_task_label));
         taskFinishedList.setLayoutManager(new LinearLayoutManager(this));
         taskFinishedList.setAdapter(finishedList);
         taskFinishedList.setNestedScrollingEnabled(false);
